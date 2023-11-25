@@ -27,13 +27,11 @@ class Query(graphene.ObjectType):
         return Recipe.objects.filter(name__icontains=name)
 
 class CreateRecipe(graphene.Mutation):
-    # Input pour la création d'une recette
     class Arguments:
         name = graphene.String(required=True)
         ingredients = graphene.String(required=True)
         instructions = graphene.String(required=True)
 
-    # Résultat de la création
     recipe = graphene.Field(RecipeType)
 
     def mutate(self, info, name, ingredients, instructions, photo=None):
@@ -42,14 +40,12 @@ class CreateRecipe(graphene.Mutation):
         return CreateRecipe(recipe=recipe)
 
 class UpdateRecipe(graphene.Mutation):
-    # Input pour la mise à jour d'une recette
     class Arguments:
         id = graphene.ID(required=True)
         name = graphene.String()
         ingredients = graphene.String()
         instructions = graphene.String()
 
-    # Résultat de la mise à jour
     recipe = graphene.Field(RecipeType)
 
     def mutate(self, info, id, **kwargs):
@@ -60,7 +56,6 @@ class UpdateRecipe(graphene.Mutation):
         return UpdateRecipe(recipe=recipe)
 
 class DeleteRecipe(graphene.Mutation):
-    # Input pour la suppression d'une recette
     class Arguments:
         id = graphene.ID(required=True)
 
